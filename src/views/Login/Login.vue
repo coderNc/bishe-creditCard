@@ -186,8 +186,12 @@ export default {
                 }else{
                   this.$router.push('/index')
                 }
-              }else if(res.data.code == 20003){
+              }else if(res.data.code == 20003){     //重复登录
                 this.$message.error('用户已经登录，请勿重复登录！');
+              }else if(res.data.code == 20007){     //账号错误
+                this.$message.error('用户名不存在！');
+              }else if(res.data.code == 20001){     //密码错误
+                this.$message.error('密码错误！');
               }
             })
           } else {

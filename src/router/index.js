@@ -13,6 +13,7 @@ const BankInfo = () => import('@/views/User/BankInfo.vue')
 const BindCard = () => import('@/views/User/BindCard.vue')
 const MoneyInfo = () => import('@/views/User/MoneyInfo.vue')
 const UserOperate = () => import('@/views/User/UserOperate.vue')
+const MoneyMove = () => import('@/views/User/MoneyMove.vue')
 
 
 
@@ -21,6 +22,7 @@ const AdminIndex = () => import('@/views/Admin/AdminIndex.vue')
 const AdminUser = () => import('@/views/Admin/AdminUser.vue')
 const AdminBank = () => import('@/views/Admin/AdminBank.vue')
 const AdminCard = () => import('@/views/Admin/AdminCard.vue')
+const AdminOp = () => import('@/views/Admin/AdminOp.vue')
 
 
 
@@ -71,6 +73,10 @@ export default new Router({
           path:'userOperate',
           component:UserOperate
         },
+        {
+          path:'moneyMove',
+          component:MoneyMove
+        },
       ]
     },
     {
@@ -96,8 +102,8 @@ export default new Router({
           component:AdminCard
         },
         {
-          path:'userOperate',
-          component:UserOperate
+          path:'operate',
+          component:AdminOp
         },
       ]
     },

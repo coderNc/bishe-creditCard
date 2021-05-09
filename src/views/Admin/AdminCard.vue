@@ -1,8 +1,11 @@
 <template>
   <div>
-            <el-table :data="banks" style="width: 100%" border stripe>
-              <el-table-column label="银行id" align="center">
-                <template slot-scope="scope">{{ scope.row.bank_id }}</template>
+            <el-table :data="cards" style="width: 100%" border stripe>
+              <el-table-column label="用户id" align="center">
+                <template slot-scope="scope">{{ scope.row.user_id }}</template>
+              </el-table-column>
+              <el-table-column label="用户" align="center">
+                <template slot-scope="scope">{{ scope.row.name }}</template>
               </el-table-column>
               <el-table-column label="银行名称" align="center">
                 <template slot-scope="scope">{{ scope.row.bank_name }}</template>
@@ -16,7 +19,7 @@
               <el-table-column label="余额/￥" align="center">
                 <template slot-scope="scope">{{ scope.row.balance }}</template>
               </el-table-column>
-      <el-table-column label="操作" align="center">
+<!--       <el-table-column label="操作" align="center">
         <template slot="header">
           <el-button type="primary" @click="dialogVisible = true"
             >添加卡片<i class="el-icon-plus el-icon--right"></i
@@ -27,7 +30,7 @@
             >解绑</el-button
           >
         </template>
-      </el-table-column>
+      </el-table-column> -->
             </el-table>
 
 
@@ -65,7 +68,7 @@ export default {
   data () {
     return {
       dialogVisible: false,
-      banks:[],
+      cards:[],
       banksData:[],
       cardForm:{
         bank_id:'',
@@ -82,15 +85,16 @@ export default {
   created () {
       this.axios({
         method:'POST',
-        url:'/user'
+        url:'/cards',
+        data:JSON.stringify({
+          cur_page:0,
+          limit:10
+        })
       }).then(res => {
         //console.log(res);
         if(res.status == 200 && res.data.code == 10000){
-          this.banks = res.data.data.card
-          //console.log(this.userData);
+          this.cards = res.data.data.cards
         }
-      }).catch(err =>{
-        //console.log(err);
       })
 
       this.axios({

@@ -21,7 +21,10 @@
     <el-button type="primary" @click="bindCard">用户绑定信用卡按钮</el-button>
     <el-button type="primary" @click="unbindCard">用户解绑信用卡按钮</el-button>
     <el-button type="primary" @click="operateBalance">存取款按钮</el-button>
+    <el-button type="primary" @click=" moveBalance">转账按钮</el-button>
+    <el-button type="primary" @click="getAllCard">获取全部信用卡按钮</el-button>
     <el-button type="primary" @click="getUserOperate">获取用户信用卡流水按钮</el-button>
+    <el-button type="primary" @click="getAllUserOperate">获取全部用户信用卡流水按钮</el-button>
     
   </div>
 </template>
@@ -274,6 +277,50 @@ export default {
           operate_type:0
         })
       }).then(res =>{
+        console.log(res);
+      })
+    },
+    getAllUserOperate(){
+      this.axios({
+        method:'POST',
+        url:'/operates',
+        data:JSON.stringify({
+          limit:5,
+          offset:5,
+          total_page:0,
+          money_type:0
+        })
+      }).then(res => {
+        console.log(res);
+      })
+    },
+    getAllCard(){
+      this.axios({
+        method:'POST',
+        url:'/cards',
+        data:JSON.stringify({
+          cur_page:0,
+          limit:10
+        })
+      }).then(res => {
+        console.log(res);
+      })
+    },
+    moveBalance(){
+      this.axios({
+        method:'POST',
+        url:'/money/move',
+        data:JSON.stringify({
+          operate_user_name: "zhangsan",
+          operate_card_id: "7777 7777 6666 738",
+          operate_bank_id: 9,
+          operate_desc: "转账",  
+          money: 100,         
+          other_user_name: "cccccccaaa",
+          other_card_id: "23424434321111",
+          other_bank_id: 11         
+        })
+      }).then(res => {
         console.log(res);
       })
     }

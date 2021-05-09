@@ -3,7 +3,7 @@
     <heder></heder>
     <el-container>
       <!-- <el-divider></el-divider> -->
-      <el-aside width="210px" style="background-color: rgb(238, 241, 246)">
+      <el-aside width="210px" >
         <el-menu :default-openeds="['1', '2']">
           <el-submenu index="1">
             <template slot="title"><i class="el-icon-message"></i>导航一</template>
@@ -14,7 +14,8 @@
             <template slot="title"><i class="el-icon-menu"></i>导航二</template>
               <el-menu-item index="2-1" @click="goBindCard">绑定银行卡</el-menu-item>
               <el-menu-item index="2-2" @click="goMoneyInfo">存取款</el-menu-item>
-              <el-menu-item index="2-3" @click="goUserOperate">查询流水</el-menu-item>
+              <el-menu-item index="2-3" @click="goMoneyMove">转账</el-menu-item>
+              <el-menu-item index="2-4" @click="goUserOperate">查询流水</el-menu-item>
           </el-submenu>
         </el-menu>
       </el-aside>
@@ -68,6 +69,9 @@ export default {
   },
   goUserOperate(){
     this.$router.push('/user/userOperate')
+  },
+  goMoneyMove(){
+    this.$router.push('/user/moneyMove')
   }
   }
 }
@@ -78,6 +82,6 @@ export default {
   .el-aside {
     color: #333;
     margin: 50px 0 50px 100px;
-    border: 1px solid #b3c0d117;
+    border: 1px solid #5151522c;
   }
 </style>

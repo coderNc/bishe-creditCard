@@ -180,7 +180,7 @@ export default {
         this.$router.push('/admin/bank')
     },
     gouserOperate(){
-        this.$router.push('/admin/userOperate')
+        this.$router.push('/admin/operate')
     },
     toggleAside(){
         this.isCollapse = !this.isCollapse
