@@ -12,7 +12,7 @@
           <el-button type="text" class="button" @click="unbindCard(bankForm.id)" v-if="isShowMoney">解绑</el-button>
           <el-button type="text" class="button" @click="goBank" v-else>解绑</el-button>
           
-          <span v-show="isShowMoney">余额：{{bankForm.balance}}</span>
+          <span v-show="isShowMoney">余额/￥：{{bankForm.balance}}</span>
         </div>
       </div>
     </el-card>

@@ -7,6 +7,7 @@
             <el-input
               v-model="cardForm.credit_card_num"
               placeholder="请输入银行卡号"
+              @blur="getName()"
             ></el-input>
           </el-form-item>
           <el-form-item label="银行">
@@ -29,39 +30,16 @@ export default {
   data () {
     return {
       banksForm:[],
+      num:6230520210014698370,
       cardForm: {
         credit_card_num: "",
         bank_id:''
       },
       rules: {
-        username: [
-          { required: true, message: "请输入用户名", trigger: "blur" },
-          {
-            min: 1,
-            max: 15,
-            message: "长度在 1 到 15 个字符",
-            trigger: "blur",
-          },
+        credit_card_num: [
+          { required: true, message: "请输入银行卡号！", trigger: "blur" },
+          {min: 19,max: 19,message: "请输入数字且长度必须为19位",trigger: "blur"}
         ],
-        password: [
-          { required: true, message: "请输入密码", trigger: "blur" },
-          {
-            min: 6,
-            max: 15,
-            message: "长度在 6 到 15 个字符",
-            trigger: "blur",
-          },
-        ],
-        telephone: [
-          { required: true, message: "请输入手机号", trigger: "blur" },
-          {
-            min: 11,
-            max: 11,
-            message: "请输入正确的手机号！",
-            trigger: "blur",
-          },
-        ],
-        level: [{ required: true, message: "请选用户角色", trigger: "change" }],
       },
     }
   },
@@ -96,6 +74,39 @@ export default {
 
   },
   methods: {
+    getName(){
+      var sixId = this.cardForm.credit_card_num.slice(0,6)
+      var yhName = ''
+      switch(sixId){
+        case '623052':
+          yhName = "中国农业银行"
+          break;
+        case '621785':
+          yhName = "中国银行"
+          break;
+        case '621483':
+          yhName = "招商银行"
+          break;
+        case '621559':
+          yhName = "中国工商银行"
+          break;
+        default:
+          yhName = ''
+      }
+      if(yhName === ''){
+        this.$notify.error({
+          title: '错误',
+          message: '请输入正确格式的银行卡~~'
+        });
+      }else{
+        this.banksForm.forEach((value) => {
+        if(value.bank_name === yhName){
+          this.cardForm.bank_id = value.id
+        }
+      })
+      }
+
+    },
     bindCard(){
       this.axios({
         method:'POST',

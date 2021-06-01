@@ -10,3 +10,8 @@ export function timestampToTime(timestamp) {
   return Y+M+D+h+m+s;
 }
 
+
+
+export function yhName(id){
+  
+}

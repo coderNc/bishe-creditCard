@@ -16,6 +16,7 @@
             <el-menu-item index="2-1" @click="goBankInfo">我的银行卡</el-menu-item>
             <el-menu-item index="2-2" @click="goBindCard">绑定银行卡</el-menu-item>
             <el-menu-item index="2-3" @click="goMoneyInfo">存取款</el-menu-item>
+            <el-menu-item index="2-4" @click="goMoneyMove">转账</el-menu-item>
             <el-menu-item index="2-3" @click="goUserOperate">查询流水</el-menu-item>
           </el-submenu>
           <el-menu-item index="3" @click="goUserInfo">个人信息</el-menu-item>
@@ -89,6 +90,9 @@ export default {
   },
   goUserOperate(){
     this.$router.push('/user/userOperate')
+  },
+  goMoneyMove(){
+    this.$router.push('/user/moneyMove')
   },
     unLogin(){
         this.$confirm('确定退出?', '提示', {

@@ -112,7 +112,7 @@ export default {
         method:"POST",
         url:'/user',
         data:JSON.stringify({
-          id:16
+          id:36
         })
       }).then(res => {
         console.log(res);
@@ -141,8 +141,8 @@ export default {
         url:'/user/login',
         
         data:JSON.stringify({
-          user_name:'admin',
-          password:'12345678'
+          user_name:'cccccccaaa',
+          password:'11111111'
         })
       }).then(res => {
         console.log(res);
@@ -207,7 +207,7 @@ export default {
         method:'POST',
         url:'/bank',
         data:JSON.stringify({
-          bank_name:'test'
+          bank_name:'中国工商银行'
         })
       }).then(res => {
         console.log(res);
@@ -280,6 +280,7 @@ export default {
         console.log(res);
       })
     },
+    //获取所有用户流水
     getAllUserOperate(){
       this.axios({
         method:'POST',
@@ -294,6 +295,7 @@ export default {
         console.log(res);
       })
     },
+    //获取所有卡片
     getAllCard(){
       this.axios({
         method:'POST',
@@ -306,13 +308,14 @@ export default {
         console.log(res);
       })
     },
+    //转账接口
     moveBalance(){
       this.axios({
         method:'POST',
         url:'/money/move',
         data:JSON.stringify({
-          operate_user_name: "zhangsan",
-          operate_card_id: "7777 7777 6666 738",
+          operate_user_name: "admin",
+          operate_card_id: "6230520210014691234",
           operate_bank_id: 9,
           operate_desc: "转账",  
           money: 100,         

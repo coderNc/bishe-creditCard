@@ -2,23 +2,24 @@
 <div class="wrapper">
   <div>&nbsp;</div>
     <div class="moneyWrapper">
-        <el-form ref="form" :model="balance" :rules="rules" label-width="120px" class="formWrapper">
+        <el-form ref="form" :model="balance" label-width="120px" class="formWrapper">
           <el-form-item label="操作：" prop="level">
             <el-radio-group v-model="balance.operate_type">
               <el-radio :label="0">存款</el-radio>
               <el-radio :label="1">取款</el-radio>
             </el-radio-group>
           </el-form-item>
+          <el-form-item label="请选择银行卡：">
+              <el-select v-model="balance.credit_card_num" placeholder="请选择银行卡" @change="getName">
+                <el-option v-for="(item,index) in banksForm" :key="index" :label="item.credit_card_num" :value="item.credit_card_num"></el-option>
+              </el-select>
+            </el-form-item>
             <el-form-item label="请选择银行：">
               <el-select v-model="balance.bank_id" placeholder="请选择银行">
                 <el-option v-for="(item,index) in banksForm" :key="index" :label="item.bank_name" :value="item.bank_id"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="请选择银行卡：">
-              <el-select v-model="balance.credit_card_num" placeholder="请选择银行卡">
-                <el-option v-for="(item,index) in banksForm" :key="index" :label="item.credit_card_num" :value="item.credit_card_num"></el-option>
-              </el-select>
-            </el-form-item>
+
 
             <el-form-item label="请输入金额：" prop="money">
               <el-input v-model.number="balance.money" placeholder="请输入金额">
@@ -79,6 +80,13 @@ export default {
 
   },
   methods: {
+    getName(){
+      this.banksForm.forEach(value => {
+        if(value.credit_card_num === this.balance.credit_card_num){
+          this.balance.bank_id = value.bank_id
+        }
+      })
+    },
   operateBalance(){
     this.$prompt('请输入该银行卡密码', '提示', {
           confirmButtonText: '确定',
@@ -109,6 +117,7 @@ export default {
                 message: res.data.data.operate_flow,
                 type: 'success'
               });
+              location.reload()
             }
           })
 
@@ -143,7 +152,7 @@ export default {
   background-color: #eff0f19a;
 }
 .moneyWrapper{
-   width: 400px;
+  width: 400px;
   margin: 50px auto;
 }
 </style>

@@ -16,7 +16,7 @@
 
           <div class="table" v-if="isShowTable">
             <el-divider></el-divider>
-            <el-table :data="userOperate" style="width: 80%" border stripe>
+            <el-table :data="userOperate" style="width: 100%" border stripe>
               <el-table-column label="卡号" align="center">
                 <template slot-scope="scope">{{ scope.row.credit_card_num }}</template>
               </el-table-column>

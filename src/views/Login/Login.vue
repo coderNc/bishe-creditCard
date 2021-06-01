@@ -12,6 +12,19 @@
           <el-form-item label="密码" prop="password">
             <el-input type="password" v-model="form.password"  placeholder="请输入密码" @keyup.enter.native="Login('form')"></el-input>
           </el-form-item>
+          <el-form-item label="验证码" prop="verificationCode" style="position: relative;">
+                <el-input v-model="form.verificationCode" autocomplete="off"  style="width: 160px;"></el-input>
+                  <div @click="refreshCode" class="codeWrapper">
+                    <a href="javascript:;">
+                      <identify-code
+                          :identifyCode="identifyCode"
+                          :contentWidth="150"
+                          :contentHeight="40"
+                          :fontSizeMin="40"
+                      />
+                    </a>
+                  </div>
+              </el-form-item>
           <el-form-item>
             <el-button @click="goBack">取消</el-button>
             <el-button type="primary" @click="Login('form')" >登录</el-button>
@@ -81,18 +94,39 @@
 </template>
 
 <script>
+import IdentifyCode from "@/components/common/IdentifyCode.vue"
 export default {
     name:  '',
     mixins: [],
     props: {},
-    components: {},
+    components: {
+      IdentifyCode
+    },
     data () {
+      var codeRules = (rule, value, callback) => {
+        console.log(value);
+                if (value === '') {
+                    //return "验证码不能为空";
+                    return callback(new Error('验证码不能为空'));
+                }else if (value.toLowerCase() !== this.identifyCode.toLowerCase()) {
+                    //return "验证码输入不正确";
+                    return callback(new Error('验证码输入不正确!'));
+                } else {
+                    return callback();;
+                }
+    }
         return {
+          //生成验证码的字符范围
+          identifyCodes: "ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz0123456789",
+          //生成的验证码
+          identifyCode: "",
           userData:{},
           dialogVisible: false,
+
           form: {
             user_name: '',
             password:'',
+            verificationCode:'',
           },
           userForm: {
             user_name: "",
@@ -127,6 +161,10 @@ export default {
             gender: [
               { required: true, message: '请选择性别！', trigger: 'chenge' },
             ],
+            verificationCode:[
+          { required: true, message: "请输入验证码！", trigger: "blur" },
+            { validator: codeRules, trigger: 'blur'}
+        ]
           }
         }
     },
@@ -159,11 +197,29 @@ export default {
       })
     },
     mounted () {
-
+      this.identifyCode = "";
+      this.makeCode(this.identifyCodes, 4);
     },
     methods: {
-      
-      Login(formName){
+    //生成随机数
+    randomNum(min, max) {
+      return Math.floor(Math.random() * (max - min) + min);
+    },
+    //刷新验证码
+    refreshCode() {
+      this.identifyCode = "";
+      this.makeCode(this.identifyCodes, 4);
+    },
+    //生成验证码，l为生成验证码的长度
+    makeCode(o, l) {
+      for (let i = 0; i < l; i++) {
+        //随机字符串拼接
+        this.identifyCode += this.identifyCodes[
+        this.randomNum(0, this.identifyCodes.length)
+        ];
+      }
+    },
+    Login(formName){
         this.$refs[formName].validate((valid) => {
           if (valid) {
             //如果校验成功进入此
@@ -171,7 +227,10 @@ export default {
             this.axios({
               method:'POST',
               url:'/user/login',
-              data:JSON.stringify(this.form)
+              data:JSON.stringify({
+                user_name:this.form.user_name,
+                password:this.form.password
+              })
             }).then(res => {
               console.log(res);
               if (res.status == 200 && res.data.code == 10000) {
@@ -258,9 +317,6 @@ export default {
 </script>
 
 <style scoped>
-body{
-  
-}
 .bgImg{
   width: 100%;
   height: 937px;
@@ -286,5 +342,12 @@ body{
     display: inline-block;
     height: 40px;
     padding-top: 2px;
+  }
+  .codeWrapper{
+    width: 150px;
+    height: 45px;
+    position: absolute;
+    right: 0;
+    top: 0;
   }
 </style>

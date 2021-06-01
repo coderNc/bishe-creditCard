@@ -14,9 +14,9 @@
           <img :src="scope.row.bank_pic" class="bank_pic">
         </template>
       </el-table-column>
-      <el-table-column label="银行卡图片"  align="center" class="bank_card_pic" width="300px">
+      <el-table-column label="银行卡图片"  align="center"  width="300px">
         <template slot-scope="scope">
-          <img :src="scope.row.bank_card_pic">
+          <img :src="scope.row.bank_card_pic" class="bank_card_pic">
         </template>
       </el-table-column>
       <el-table-column label="省"  align="center">
@@ -31,8 +31,8 @@
       <el-table-column label="详细地址"  align="center">
         <template slot-scope="scope">{{scope.row.bank_address}}</template>
       </el-table-column>
-      <el-table-column label="创建时间"  align="center">
-        <template slot-scope="scope">{{scope.row.create_time}}</template>
+      <el-table-column label="创建时间"  align="center" width="200px">
+        <template slot-scope="scope">{{timestampToTime(scope.row.create_time)}}</template>
       </el-table-column>
       <el-table-column label="操作"  align="center"> 
         <template slot="header">
@@ -103,6 +103,7 @@
 </template>
 
 <script>
+import {timestampToTime} from '../../assets/js/tools'
 import { regionData,CodeToText } from "element-china-area-data";
 export default {
     name:  '',
@@ -144,16 +145,10 @@ export default {
           },
           currentPage: 1,     //当前页
           total:100,          //总数
-          pageSize:3,         //每页展示个数
-          limit:3,
+          pageSize:6,         //每页展示个数
+          limit:6,
           offset:0
         }
-    },
-    watch: {
-
-    },
-    computed: {
-
     },
     created () {
       //请求银行列表
@@ -175,10 +170,8 @@ export default {
         console.log("错误" + err);
       })
     },
-    mounted () {
-
-    },
     methods: {
+      timestampToTime,
         deleteBank(id){
             console.log(id);
             this.$confirm('此操作将删除该银行, 是否继续?', '提示', {

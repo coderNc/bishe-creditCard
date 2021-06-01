@@ -24,7 +24,7 @@
         }}</template>
       </el-table-column>
       <el-table-column label="注册时间" align="center">
-        <template slot-scope="scope">{{ scope.row.create_time }}</template>
+        <template slot-scope="scope">{{ timestampToTime(scope.row.create_time) }}</template>
       </el-table-column>
       <el-table-column label="生日" align="center">
         <template slot-scope="scope">{{ scope.row.birthday }}</template>
@@ -120,6 +120,7 @@
 </template>
 
 <script>
+import {timestampToTime} from '../../assets/js/tools'
 export default {
   name: "",
   mixins: [],
@@ -171,8 +172,8 @@ export default {
       },
       currentPage: 1, //当前页
       total: 100, //总数
-      pageSize: 5, //每页展示个数
-      limit: 5,
+      pageSize: 10, //每页展示个数
+      limit: 10,
       offset: 0,
     };
   },
@@ -202,6 +203,7 @@ export default {
   },
   mounted() {},
   methods: {
+    timestampToTime,
     deleteUser(id) {
       console.log(id);
       this.$confirm("此操作将删除该用户, 是否继续?", "提示", {

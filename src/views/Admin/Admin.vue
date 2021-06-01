@@ -12,7 +12,7 @@
           <!-- <img class="avatar" :src="userData.picture"> -->
 					<div class="welcome">
 						<p class="name comename">欢迎</p>
-						<p class="name avatarname">{{userData.user.user_name}}</p>
+					<!-- 	<p class="name avatarname">{{userData.user.user_name}}</p> -->
 					</div>
           <el-dropdown trigger="click">
             <span class="el-dropdown-link">
@@ -149,7 +149,7 @@ export default {
         method:'POST',
         url:'/user'
       }).then(res => {
-        //console.log(res);
+        console.log(res);
         if(res.status == 200 && res.data.code == 10000){
           this.userData = res.data.data
           //console.log(this.userData);
